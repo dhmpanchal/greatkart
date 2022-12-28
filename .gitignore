@@ -1,0 +1,9 @@
+media/
+venv/
+.vscode/
+.env
+greatkart/migrations/
+greatkart/__pycache__/
+thesite/migrations/
+thesite/__pycache__/
+db.sqlite3
