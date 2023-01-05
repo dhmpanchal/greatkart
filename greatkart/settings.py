@@ -10,7 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import environ
 from pathlib import Path
+from django.contrib.messages import constants as messages
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -31,6 +36,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'extras.apps.ExtrasConfig',
+    'category.apps.CategoryConfig',
+    'accounts.apps.AccountsConfig',
     'thesite.apps.ThesiteConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -106,13 +114,15 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/kolkata'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+AUTH_USER_MODEL = "accounts.Account"
 
 
 # Static files (CSS, JavaScript, Images)
@@ -124,3 +134,16 @@ STATICFILES_DIRS = [
     BASE_DIR /'static',
     'greatkart/static',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR /'media'
+
+MESSAGE_TAGS = {
+    messages.ERROR : "danger",
+}
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
