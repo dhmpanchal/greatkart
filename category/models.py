@@ -1,6 +1,7 @@
 from django.db import models
 from extras.models import BaseModel
 from django.utils.html import mark_safe
+from django.urls import reverse
 
 # Create your models here.
 class Category(BaseModel):
@@ -13,6 +14,10 @@ class Category(BaseModel):
         db_table = "tbl_categories"
         verbose_name = 'category'
         verbose_name_plural = 'categories'
+
+    
+    def get_url(self):
+        return reverse('products_by_cats', args=[self.slug])
 
     def __str__(self):
         return self.category_name
