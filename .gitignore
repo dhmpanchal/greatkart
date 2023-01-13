@@ -14,4 +14,6 @@ accounts/migrations/
 accounts/__pycache__/
 store/migrations/
 store/__pycache__/
+cart/migrations/
+cart/__pycache__/
 db.sqlite3
