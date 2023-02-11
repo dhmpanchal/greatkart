@@ -11,7 +11,8 @@ class CartView(View):
     def get(self, request, total=0, quantity=0, cart_items=None, *args, **kwargs):
         context = {}
         tax = 0
-        grand_toal = 0
+        grand_total = 0
+        the_cart_items = None
 
         the_utility = UtilityManager(request)
 

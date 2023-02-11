@@ -4,6 +4,7 @@ from extras.utility import UtilityManager
 from store.models import Product
 from category.models import Category
 from cart.models import ItemInCart
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 # Create your views here.
 class StoreView(View):
@@ -15,12 +16,16 @@ class StoreView(View):
 
         if category_slug is not None:
             category = get_object_or_404(Category, slug=category_slug)
-            products = Product.objects.filter(category=category,is_available=True)
+            products = Product.objects.filter(category=category,is_available=True).order_by('id')
         else:
-            products = Product.objects.filter(is_available=True)
+            products = Product.objects.filter(is_available=True).order_by('id')
+
+        paginator = Paginator(products, 6)
+        page = request.GET.get('page')
+        page_products = paginator.get_page(page)
 
         context = {
-            'products': products,
+            'products': page_products,
             'total_products': products.count()
         }
         return render(request, 'thesite/store.html', context)
